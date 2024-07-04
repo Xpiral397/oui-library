@@ -18,6 +18,7 @@ export const Login = async (user: UserLoginPayload) => {
       };
     }
   } catch (e) {
+    console.log(error);
     return {
       res: "Credential Not Found",
       status: 500,
