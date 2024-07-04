@@ -13,10 +13,10 @@ import {
 import { Admin, User } from "./type";
 import { loadData } from "./clientStorage/save";
 
-export const baseURL = "http://127.0.0.1:8000";
+export const baseURL = "https://ouilibray.pythonanywhere.com";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/", // Your API base URL
+  baseURL: "https://ouilibray.pythonanywhere.com/", // Your API base URL
   headers: {
     "Content-Type": "application/json",
   },
