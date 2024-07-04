@@ -31,7 +31,7 @@ export const getCurrentUser = (): "ADMIN" | "STUDENT" => {
 // Request interceptor
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const accessToken = (loadData().auth as any).auth.accessToken;
+    const accessToken = (loadData().auth as any)?.auth?.accessToken ?? "";
     // console.log(accessToken, "drug");
     if (accessToken) {
       config.headers.Authorization = `JWT ${accessToken}`;
