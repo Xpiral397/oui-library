@@ -1,7 +1,7 @@
 import { ScrollShadow } from "@nextui-org/react";
 import React, { useState, useEffect } from "react";
 
-const EditBookPage = ({ bookId }: { bookId: string }) => {
+function EditBookPage({ bookId }: { bookId: string }) {
   const [bookData, setBookData] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
@@ -268,6 +268,6 @@ const EditBookPage = ({ bookId }: { bookId: string }) => {
       </div>
     </ScrollShadow>
   );
-};
+}
 
 export default EditBookPage;
