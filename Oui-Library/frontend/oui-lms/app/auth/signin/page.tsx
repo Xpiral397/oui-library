@@ -139,10 +139,10 @@ export default function SiginCar() {
   const signup = async (matric_number: string, password: string) => {
     setLoading(true);
     const response = await Login({
-      matric_number: matric,
+      matric_number: matric_number,
       password: password,
     });
-    if ((await response).status === 200) {
+    if (response.status === 200) {
       const { access_token: accessToken, refresh_token: refreshToken } =
         response.res;
       console.log(refreshToken, accessToken, "ji", response);
@@ -251,7 +251,7 @@ export default function SiginCar() {
                 isLoading={loading}
                 className="bg-purple-700 w-full text-white font-[700]"
               >
-                Sign Up
+                Login
               </Button>
 
               <div className="text-center text-purple-500 font-[500]">
