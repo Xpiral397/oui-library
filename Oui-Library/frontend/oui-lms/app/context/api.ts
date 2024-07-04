@@ -51,6 +51,7 @@ api.interceptors.response.use(
   async (error: any) => {
     const current_user = getCurrentUser();
     const originalRequest = error.config;
+    console.log(originalRequest, error);
     if (
       error.response &&
       error.response.status === 401 &&
