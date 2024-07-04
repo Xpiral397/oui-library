@@ -1,6 +1,5 @@
 import api from "@/app/context/api";
-import { login, signupData } from "../reducers/auth";
-import { error } from "console";
+
 interface UserLoginPayload {
   matric_number: string;
   password: string;
@@ -18,7 +17,7 @@ export const Login = async (user: UserLoginPayload) => {
       };
     }
   } catch (e) {
-    console.log(error);
+    // console.log(e);
     return {
       res: "Credential Not Found",
       status: 500,

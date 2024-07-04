@@ -4,13 +4,13 @@ import axios, {
   AxiosResponse,
 } from "axios";
 import store from "./store"; // Assuming you have access to your Redux store here
-import auth, { login, logout, User } from "./reducers/auth";
+import auth, { login, logout } from "./reducers/auth";
 import {
   AdminAuthState,
   login as adminLogin,
   logout as adminLogut,
 } from "./reducers/admin";
-import { Admin } from "./type";
+import { Admin, User } from "./type";
 import { loadData } from "./clientStorage/save";
 
 export const baseURL = "http://127.0.0.1:8000";
