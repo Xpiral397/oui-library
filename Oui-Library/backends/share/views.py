@@ -1,10 +1,11 @@
 # accounts/views.py
 from rest_framework import viewsets, status
+
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.http import JsonResponse
-from rest_framework.permissions import IsAuthenticated
-from .models import UserAccount, Book
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from .models import UserAccount, Book, Lend
 from .serializers import (
     BookSerializer,
     UserAccountSerializer,
@@ -33,7 +34,9 @@ class UserAccountViewSet(viewsets.ModelViewSet):
                 {"Error": "User not found"}, status=status.HTTP_404_NOT_FOUND
             )
 
-    @action(detail=False, methods=["get"], permission_classes=[IsAuthenticated])
+    @action(
+        detail=False, methods=["get"], permission_classes=[IsAuthenticated, IsAdminUser]
+    )
     def get_books_by_category(self, request, category):
         try:
             user_books_category = {}
@@ -60,7 +63,9 @@ class UserAccountViewSet(viewsets.ModelViewSet):
                 {"Error": "Categroy Not Found"}, status=status.HTTP_404_NOT_FOUND
             )
 
-    @action(detail=True, methods=["get"], permission_classes=[IsAuthenticated])
+    @action(
+        detail=True, methods=["get"], permission_classes=[IsAuthenticated, IsAdminUser]
+    )
     def get_recomended_books(self, request):
         try:
             user_books_category = []
@@ -83,7 +88,7 @@ class UserAccountViewSet(viewsets.ModelViewSet):
     def lend_new_book(self, request, id):
         try:
             book = Book.objects.get(id=id)
-            if book.quantity - 1 != 0:
+            if book.quantity - 1 > -1:
                 bookId, duePrice, startDate, endDate = {*request.POST.dict()}
                 reserve = LendSerializer(
                     data={
@@ -93,9 +98,9 @@ class UserAccountViewSet(viewsets.ModelViewSet):
                         "cost_per_day": duePrice,
                     }
                 )
-
-            response = books_serializer
-            return Response(response)
+                if reserve.is_valid(raise_exception=False):
+                    reserve.save()
+                    return LendSerializer(Lend.objects.all(), many=True)
         except Book.DoesNotExist as e:
             return Response(
                 {"Error": "Categroy Not Found"}, status=status.HTTP_404_NOT_FOUND

@@ -13,17 +13,17 @@ import {
 import { Admin, User } from "./type";
 import { loadData } from "./clientStorage/save";
 
-export const baseURL = "https://ouilibray.pythonanywhere.com";
-
+// export const baseURL = "https://ouilibray.pythonanywhere.com";
+export const baseURL = "http://127.0.0.1:8000";
 const api = axios.create({
-  baseURL: "https://ouilibray.pythonanywhere.com/", // Your API base URL
+  baseURL: "http://127.0.0.1:8000/", // Your API base URL
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 export const getCurrentUser = (): "ADMIN" | "STUDENT" => {
-  console.log(!store.getState().auth.admin ? "STUDENT" : "ADMIN");
+  console.log(store.getState());
   return !store.getState().auth.admin ? "STUDENT" : "ADMIN";
 };
 

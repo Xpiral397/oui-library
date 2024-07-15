@@ -1,5 +1,5 @@
-import { Books } from "@/app/dashboard/discover/sidebar";
 import { createContext } from "react";
+import { Books } from "../type";
 
 export interface UseSelectedBooks {
   selectedBooks: Books | null;

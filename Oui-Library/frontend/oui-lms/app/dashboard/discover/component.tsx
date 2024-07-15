@@ -87,7 +87,7 @@ export default function BooksRender({
           <p>
             <ReadMore color="inherit" fontSize="small" />
           </p>
-          <p>{Category.total_pages}</p>
+          <p>{Category?.total_pages}</p>
         </h1>
         <h1 className="flex items-center h-full mt-1 space-x-3 font-semibold text-center rounded-lg text-ellipsis ">
           <p>
@@ -97,17 +97,20 @@ export default function BooksRender({
         </h1>
       </div>
       <div className="w-[180px] flex items-center justify-center sm:w-full">
-        <Image src={baseURL + Category.image} className="h-[250px]" />
+        <Image
+          src={baseURL + (Category?.image ? Category?.image : "")}
+          className="h-[250px]"
+        />
       </div>
       <div className="w-full  text-sm text-slate-600">
         <h1 className="w-full px-3 mt-2 font-semibold text-center rounded-lg text-ellipsis">
-          {Category.title}
+          {Category?.title}
         </h1>
         <h1 className="flex justify-between w-full mt-1 font-semibold text-center rounded-lg text-ellipsis">
           <p>
             <Person /> Author
           </p>
-          <p>{Category.author}</p>
+          <p>{Category?.author}</p>
         </h1>
         <div className="flex items-center justify-between h-10 p-1 ">
           <h1 className="text-yellow-500 text-[15px]  flex space-x-2 px-3 mt-2 rounded-lg  font-semibold text-ellipsis text-center">
@@ -121,22 +124,22 @@ export default function BooksRender({
               <p>
                 <ThumbUp fontSize="inherit" style={{ fontWeight: "200" }} />
               </p>
-              <p>{Category.likes}</p>
+              <p>{Category?.likes}</p>
             </h1>
             <h1 className="flex justify-between w-full mt-1 space-x-2 text-center rounded-lg text-ellipsis">
               <p>
                 <ThumbDown fontSize="inherit" />
               </p>
-              <p>{Category.unlike}</p>
+              <p>{Category?.unlike}</p>
             </h1>
           </div>
         </div>
       </div>{" "}
       <div className="w-full flex justify-between space-x-1 items-center ">
-        <Button isDisabled className="w-full rounded-md">
+        <Button isDisabled className="w-full rounded-md p-2">
           Lend
         </Button>
-        <Button className="w-full rounded-md">Reserved</Button>
+        <Button className="w-full rounded-md p-2">Reserved</Button>
       </div>
     </div>
   );

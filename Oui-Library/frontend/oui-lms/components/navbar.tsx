@@ -60,6 +60,7 @@ export const Navbar = () => {
   const router = useRouter();
 
   const is_admin = (): boolean => {
+    if (type === "ADMIN") alert("isAdmin");
     return type === "ADMIN";
   };
 
@@ -107,8 +108,14 @@ export const Navbar = () => {
                   );
                   return (
                     <User
-                      name={name}
-                      description={department}
+                      name={name ? name : is_admin() ? "Administrator" : ""}
+                      description={
+                        department
+                          ? department
+                          : is_admin()
+                          ? "Library Manger"
+                          : ""
+                      }
                       avatarProps={{
                         src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
                       }}
@@ -144,49 +151,59 @@ export const Navbar = () => {
                         {getField(userData, is_admin(), "name") || "N/A"}
                       </span>
                     </p>
-                    <p className="flex justify-between w-full text-secondary-500">
-                      <span className="font-semibold">Department:</span>
-                      <span className="font-semibold text-sm">
-                        {getField(userData, is_admin(), "department") || "N/A"}
-                      </span>
-                    </p>
-                    <p className="flex justify-between w-full text-secondary-500">
-                      <span className="font-semibold">Faculty:</span>
-                      <span className="font-semibold text-sm">
-                        {getField(userData, is_admin(), "faculty") || "N/A"}
-                      </span>
-                    </p>
-                    <p className="flex justify-between w-full text-secondary-500">
-                      <span className="font-semibold">Gender:</span>
-                      <span className="font-semibold text-sm">
-                        {getField(userData, is_admin(), "gender") || "N/A"}
-                      </span>
-                    </p>
-                    <p className="flex justify-between w-full text-secondary-500">
-                      <span className="font-semibold">Number:</span>
-                      <span className="font-semibold text-sm">
-                        {getField(userData, is_admin(), "number") || "N/A"}
-                      </span>
-                    </p>
-                    <p className="flex justify-between w-full text-secondary-500">
-                      <span className="font-semibold">
-                        Expected Year of Graduation:
-                      </span>
-                      <span className="font-semibold text-sm">
-                        {getField(
-                          userData,
-                          is_admin(),
-                          "expected_year_of_graduation"
-                        ) || "N/A"}
-                      </span>
-                    </p>
-                    <p className="flex justify-between w-full text-secondary-500">
-                      <span className="font-semibold">Matric Number:</span>
-                      <span className="font-semibold text-sm">
-                        {getField(userData, is_admin(), "matric_number") ||
-                          "N/A"}
-                      </span>
-                    </p>
+
+                    {!is_admin() && (
+                      <div>
+                        {" "}
+                        <p className="flex justify-between w-full text-secondary-500">
+                          <span className="font-semibold">Department:</span>
+                          <span className="font-semibold text-sm">
+                            {getField(userData, is_admin(), "department") ||
+                              "N/A"}
+                          </span>
+                        </p>
+                        <p className="flex justify-between w-full text-secondary-500">
+                          <span className="font-semibold">Faculty:</span>
+                          <span className="font-semibold text-sm">
+                            {getField(userData, is_admin(), "faculty") ||
+                            is_admin()
+                              ? "Administrator"
+                              : "N/A'"}
+                          </span>
+                        </p>
+                        <p className="flex justify-between w-full text-secondary-500">
+                          <span className="font-semibold">Gender:</span>
+                          <span className="font-semibold text-sm">
+                            {getField(userData, is_admin(), "gender") || "N/A"}
+                          </span>
+                        </p>
+                        <p className="flex justify-between w-full text-secondary-500">
+                          <span className="font-semibold">Number:</span>
+                          <span className="font-semibold text-sm">
+                            {getField(userData, is_admin(), "number") || "N/A"}
+                          </span>
+                        </p>
+                        <p className="flex justify-between w-full text-secondary-500">
+                          <span className="font-semibold">
+                            Expected Year of Graduation:
+                          </span>
+                          <span className="font-semibold text-sm">
+                            {getField(
+                              userData,
+                              is_admin(),
+                              "expected_year_of_graduation"
+                            ) || "N/A"}
+                          </span>
+                        </p>
+                        <p className="flex justify-between w-full text-secondary-500">
+                          <span className="font-semibold">Matric Number:</span>
+                          <span className="font-semibold text-sm">
+                            {getField(userData, is_admin(), "matric_number") ||
+                              "N/A"}
+                          </span>
+                        </p>
+                      </div>
+                    )}
                     <p className="flex justify-between w-full text-secondary-500">
                       <span className="font-semibold">User Type:</span>
                       <span className="font-semibold text-sm">

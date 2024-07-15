@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { save } from "../../clientStorage/save";
-import { Admin } from "../../type";
+import { Admin, InitialData } from "../../type";
 
 // Define the initial state interface
 export interface AdminAuthState {
@@ -32,16 +32,27 @@ const authSlice = createSlice({
     login(
       state,
       action: PayloadAction<{
-        admin: Admin;
+        user: Admin;
         accessToken: string;
         refreshToken: string;
       }>
     ) {
-      state.admin = action.payload.admin;
+      let user = action.payload.user;
       state.isAuthenticated = true;
-      state.accessToken = action.payload.accessToken;
-      state.refreshToken = action.payload.refreshToken;
-      save<any>("auth", state, "User Login Successfuly", "login");
+      save<InitialData>(
+        "auth",
+        {
+          auth: {
+            ...state,
+            user,
+            isAuthenticated: true,
+            accessToken: action.payload.accessToken,
+            refreshToken: action.payload.refreshToken,
+          } as AdminAuthState,
+        },
+        "User Login Succesfuly",
+        "login"
+      );
     },
     logout(state) {
       state.isAuthenticated = false;

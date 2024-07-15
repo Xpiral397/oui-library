@@ -1,16 +1,15 @@
 "use client";
-import { Books } from "@/app/dashboard/discover/sidebar";
 import { Category } from "@/app/dashboard/expenses/component";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import api from "../api";
 import { toast } from "react-toastify";
 
-export interface useCategory {
+export interface useCategories {
   category: Category | null;
   setCategory: React.Dispatch<React.SetStateAction<Category | null>>;
 }
 
-export const useCategory = createContext<useCategory>({} as useCategory);
+export const useCategory = createContext<useCategories>({} as useCategories);
 
 export default function UseCategoryProvider({
   children,

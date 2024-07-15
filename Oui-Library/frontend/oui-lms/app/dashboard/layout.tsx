@@ -44,12 +44,8 @@ export default function DashboardLayout({
 
 function Slot({ children }: { children: ReactNode }) {
   return (
-    <UseUserPreferance>
-      <UseCategoryProvider>
-        <UseRecomendationProvider>
+   
           <div className="w-full h-full">{children}</div>;
-        </UseRecomendationProvider>
-      </UseCategoryProvider>
-    </UseUserPreferance>
+
   );
 }

@@ -6,7 +6,7 @@ import { useCategory } from "@/app/context/useSelectBooks/useCategory";
 import Book from "@/public/books.jpg";
 import { Category, CategoryRender, Recommended } from "./component";
 import { ScrollShadow } from "@nextui-org/react";
-import { InitialData } from "@/app/context/type";
+import { Books, InitialData } from "@/app/context/type";
 import { loadData } from "@/app/context/clientStorage/save";
 import { Cancel } from "@mui/icons-material";
 import UseSelectedBookProvider, {

@@ -145,16 +145,11 @@ def authenticate(email, password):
 def login(request):
     if request.method == "POST":
         data = json.load(request)
-        matric_number = data.get("email")
+        email = data.get("email")
         password = data.get("password")
 
-        if matric_number and password:
-            print(
-                CreateAdminSerializer(
-                    AdminAccount.objects.get(email=matric_number)
-                ).data
-            )
-            user = authenticate(email=matric_number, password=password)
+        if email and password:
+            user = authenticate(email=email, password=password)
             if not user:
                 return JsonResponse({"error": "Password did not match"}, status=400)
             if user:

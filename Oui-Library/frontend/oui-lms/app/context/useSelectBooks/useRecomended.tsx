@@ -1,8 +1,9 @@
 "use client";
-import { Books } from "@/app/dashboard/discover/sidebar";
+
 import { createContext, ReactNode, useEffect, useState } from "react";
 import api from "../api";
 import { toast } from "react-toastify";
+import { Books } from "../type";
 
 export interface UsePreferance {
   recomended: Books[] | null;

@@ -4,6 +4,13 @@ export interface Books {
   id: string;
   // cover: string;
   image: string;
+  series: string;
+  publisher: string;
+  publication_date: string;
+  editions: string;
+  summary: string;
+  subtitle: string;
+  date: string;
   cover: string;
   author: string;
   likes: string;

@@ -1,6 +1,8 @@
 from django.http import JsonResponse
 from django.shortcuts import HttpResponse as Response
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import action
 from .models import Book, UserAccount
 from share.email import SendEmail
 from .serializers import UserCreateSerializer
@@ -8,13 +10,13 @@ from share.serializers import BookSerializer
 from share.utils import *
 from datetime import datetime, timedelta
 from django.utils import timezone
-from dotenv import load_dotenv
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 from django.db.utils import IntegrityError
+from django.core.files.base import ContentFile
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
-
-load_dotenv()
 
 UserModel = get_user_model()
 
@@ -179,6 +181,22 @@ class UserDashabordView(APIView):
         return JsonResponse(UserCreateSerializer(self.request.user).data, safe=False)
 
 
+class UserDashabordViews(ModelViewSet):
+    # permission_classes = (CustomPermission, CustomTokenAuthentication)
+
+    def get(self, request):
+        return JsonResponse(UserCreateSerializer(self.request.user).data, safe=False)
+
+    @action(
+        detail=False,
+        methods=["get"],
+        url_name="get_admin",
+        permission_classes=[IsAdminUser],
+    )
+    def get_admin(self, request):
+        return JsonResponse(CreateAdminSerializer(self.request.user).data, safe=False)
+
+
 class GetAllAvaliableBooks(APIView):
     def get(self, request):
         all_books = Book.objects.all()
@@ -186,11 +204,26 @@ class GetAllAvaliableBooks(APIView):
         return JsonResponse({"books": serializer.data})
 
 
-class GetAllBooksByID(APIView):
+class GetAllBooksByID(ModelViewSet):
+
+    @action(
+        detail=True, methods=["get"], permission_class=[IsAdminUser, IsAuthenticated]
+    )
     def get(self, request, id):
         all_books = Book.objects.get(id=id)
-        serializer = BookSerializer(all_books, many=True)
+        serializer = BookSerializer(all_books)
         return JsonResponse({"books": serializer.data})
+
+    @action(detail=True, methods=["post"], permission_class=[IsAdminUser])
+    def update_book(self, request, id):
+        books = Book.objects.filter(id=id)
+        books.update(**{**request.POST.dict()})
+        current_book = books.get(id=id)
+        content = ContentFile(request.FILES["image"].read(), name=current_book.title)
+        current_book.image.save(current_book.title, content)
+        current_book.save()
+
+        return JsonResponse({"sucess": "true"})
 
 
 class GetAllBooksByName(APIView):

@@ -6,20 +6,12 @@ import EditBookPage from "../EditBooks";
 import { useState } from "react";
 import AdminRightSideSidebar, { AdminBooks } from "../../adminSidebar";
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function DashboardLayout(children: any) {
   const [books, setBooks] = useState<AdminBooks>({} as AdminBooks);
+  // alert(JSON.stringify(children));
   return (
     <section className="flex justify-between items-center h-full  w-full">
-      <EditBookPage bookId="" />
-
-      <AdminRightSideSidebar
-        Book={books}
-        info={"You are editing this book currently"}
-      />
+      <EditBookPage bookId={children.params.slug[0]} />
     </section>
   );
 }

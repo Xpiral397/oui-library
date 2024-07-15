@@ -28,7 +28,7 @@ import { error } from "console";
 import api from "@/app/context/api";
 import { login } from "@/app/context/reducers/admin";
 import { useDispatch } from "react-redux";
-import { getUser } from "@/app/context/auth/getUser";
+import { getAdmin } from "@/app/context/auth/getUser";
 import { User } from "@/app/context/type";
 import { toast } from "react-toastify";
 import { AdminLogin, Login } from "@/app/context/auth/login";
@@ -113,10 +113,10 @@ export default function SiginCar() {
     re_password,
   ]);
 
-  const signup = async (matric_number: string, password: string) => {
+  const signup = async (email: string, password: string) => {
     setLoading(true);
     const response = await AdminLogin({
-      matric_number: matric,
+      email,
       password: password,
     });
     if ((await response).status === 200) {
@@ -125,7 +125,7 @@ export default function SiginCar() {
       console.log(refreshToken, accessToken, "ji", response);
       if (accessToken) {
         const user: any = {
-          user: await getUser(accessToken),
+          user: await getAdmin(accessToken),
           accessToken,
           refreshToken,
         };
@@ -141,7 +141,7 @@ export default function SiginCar() {
           progress: undefined,
           theme: "light",
         });
-        router.push("admin/books");
+        router.push("/admin/dashboard/books");
       }
     } else {
       toast("Login Failed, Credential not found as administrator", {

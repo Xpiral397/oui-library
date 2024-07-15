@@ -64,44 +64,54 @@ export default function Sidebar({ Book }: { Book: Books }) {
 
   return (
     <div className="text-white space-y-10 font-[300] text-[16px] rounded-lg flex flex-col text-center mt-5 z-[100]  w-full h-full ">
-      <div className="px-3 py-5 rounded-lg bg-gradient-to-tr from-amber-100 t0-slate-50">
-        <div className="w-full px-1">
+      <div className="px-3 py-5 rounded-lg bg-gradient-to-tr from-amber-500 t0-slate-50">
+        <div className="w-full px-1 text-secondary-900 font-[500]">
+          <span className="flex items-center space-x-3 mb-3">
+            <TitleOutlined /> - <span>{Book?.title ?? "Unknow Author"}</span>
+          </span>
+
           <Image
-            src={baseURL + Book.image}
+            src={baseURL + Book?.image}
             className="w-full h-full roundded-md"
           />
         </div>
         <div className="p-3 mt-4 flex items-center space-between bg-amber-50 rounded-lg ">
-          <p className="font-semibold w-full flex items-center flex-col justify-between px-1 text-[16px] text-secondary-500 ">
+          <p className="font-semibold w-full flex items-center flex-col justify-between px-1 text-[16px] text-secondary-900 font-[500] ">
             <span className="flex items-center space-x-3">
-              <Person /> Author
+              <span>Author</span>
             </span>
-            <span>{Book.author ?? "Unknow Author"}</span>
+            <span>{Book?.author ?? "Unknow Author"}</span>
           </p>
-          <p className="font-semibold w-full flex flex-col items-center justify-between px-1 text-[16px] text-secondary-500 ">
+          <p className="font-semibold w-full flex items-center flex-col justify-between px-1 text-[16px] text-secondary-900 font-[500] ">
             <span className="flex items-center space-x-3">
-              <TitleOutlined /> Title
+              <span>Author</span>
             </span>
-            <span>{Book.title ?? "Unknow Author"}</span>
+            <span>{Book?.publisher ?? "Unknow Author"}</span>
           </p>
+          {/* <p className="font-semibold w-full flex flex-col items-center justify-between px-1 text-[16px] text-secondary-900 font-[500] ">
+            <span className="flex items-center space-x-3">
+              <TitleOutlined /> <span>Title</span>
+            </span>
+            <span>{Book?.title ?? "Unknow Author"}</span>
+          </p> */}
         </div>
       </div>
       <div className="  rounded-lg bg-yellow-500 flex  font-[400] text-[12px] py-1 px-1 ">
         <div className="items-center w-full h-full">
-          <p>{Book.rated ?? 0}</p> <Star fontSize="small" color="inherit" />
+          <p>{Book?.rated ?? 0}</p> <Star fontSize="small" color="inherit" />
         </div>
         <div className="items-center w-full h-full ">
-          <p>{Book.total_pages ?? "0"}</p>
+          <p>{Book?.total_pages ?? "0"}</p>
           <p>pages</p>{" "}
         </div>
 
         <div className="items-center w-full h-full ">
-          <p>{Book.rate ?? "0"}</p>
+          <p>{Book?.rate ?? "0"}</p>
           <p>ratings</p>{" "}
         </div>
 
         <div>
-          <p>{Book.reviews ?? 0}</p>
+          <p>{Book?.reviews ?? 0}</p>
           <p>Reviews</p>
         </div>
       </div>
@@ -114,14 +124,14 @@ export default function Sidebar({ Book }: { Book: Books }) {
                   isBordered
                   radius="full"
                   size="md"
-                  src={baseURL + Book.image}
+                  src={baseURL + Book?.image}
                 />
                 <div className="flex flex-col items-start justify-center gap-1">
                   <h4 className="font-semibold leading-none text-small text-default-600">
-                    {Book.author}
+                    {Book?.author}
                   </h4>
                   <h5 className="tracking-tight text-small text-default-400">
-                    @{Book.title}
+                    @{Book?.title}
                   </h5>
                 </div>
               </div>
@@ -129,7 +139,7 @@ export default function Sidebar({ Book }: { Book: Books }) {
 
             <CardBody className="px-3 py-0 text-small text-default-400">
               <p>
-                {`${Book.description}, Lorem ipsum dolor sit, amet consectetur
+                {`${Book?.description}, Lorem ipsum dolor sit, amet consectetur
             adipisicing elit. Libero eaque qui fugit ratione natus, nulla
             excepturi beatae molestiae facere! Cupiditate ipsum quisquam
           corporis amet veniam sint a quia est aspernatur?

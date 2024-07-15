@@ -33,7 +33,7 @@ const AddBookForm = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     // Here you would perform validation
-    if (!formData.name || !formData.author || !formData.availableItems) {
+    if (!formData.author || !formData.availableItems) {
       setError("Please fill in all required fields.");
       return;
     }
@@ -50,7 +50,7 @@ const AddBookForm = () => {
     formDataToSend.append("ISBN", formData.isbn);
     formDataToSend.append("quantity", formData.availableItems);
     formDataToSend.append("group", formData.category);
-    formDataToSend.append("price", "N100/per-day");
+    formDataToSend.append("price", "0.00");
 
     // Submit form data to backend
 
@@ -134,18 +134,34 @@ const AddBookForm = () => {
                 />
               </div>
             </div>
+            <div className="mb-4">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Category
+              </label>
+              <input
+                type="text"
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="border border-gray-300 rounded-md px-3 py-2 w-full"
+              />
+            </div>
             <div className="lg:flex block lg:space-x-3 w-full">
               <div className="mb-4">
                 <label
                   htmlFor="name"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Category
+                  Year
                 </label>
                 <input
                   type="text"
                   id="category"
-                  name="category"
+                  name="year"
                   value={formData.category}
                   onChange={handleChange}
                   className="border border-gray-300 rounded-md px-3 py-2 w-full"
@@ -200,7 +216,7 @@ const AddBookForm = () => {
                 className="border border-gray-300 rounded-md px-3 py-2 w-full"
               />
             </div>
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <label
                 htmlFor="description"
                 className="block text-sm font-medium text-gray-700 mb-1"
@@ -210,11 +226,11 @@ const AddBookForm = () => {
               <textarea
                 id="description"
                 name="description"
-                value={formData.description}
+                value={formData.about}
                 onChange={handleChange}
                 className="border border-gray-300 rounded-md px-3 py-2 w-full h-[150px]"
               />
-            </div>
+            </div> */}
             {/* Add more input fields for other attributes */}
             <div className="mb-4">
               <label

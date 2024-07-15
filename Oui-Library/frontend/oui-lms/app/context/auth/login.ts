@@ -1,7 +1,8 @@
 import api from "@/app/context/api";
 
 interface UserLoginPayload {
-  matric_number: string;
+  matric_number?: string;
+  email?: string;
   password: string;
 }
 

@@ -9,6 +9,7 @@ import {
 import { Code, Image } from "@nextui-org/react";
 import React from "react";
 import Books from "@/public/books.jpg";
+import { baseURL } from "@/app/context/api";
 
 export interface AdminBooks {
   addedeBy: string;
@@ -19,6 +20,7 @@ export interface AdminBooks {
   id: string;
   date?: string;
   cover: string;
+  image: string;
   author: string;
   title: string;
   name: string;
@@ -47,7 +49,7 @@ export default function AdminRightSideSidebar({
       </Code>
       <div className="bg-slate-100 rounded-lg py-5 px-3">
         <div className="w-full px-10">
-          <Image src={Books.src} />
+          <Image src={baseURL + Book.image} />
         </div>
         <div>
           <h1 className=" font-[500] mt-5  text-purple-800">
