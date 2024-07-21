@@ -175,15 +175,43 @@ def refresh_token(request):
 
 
 class UserDashabordView(APIView):
-    # permission_classes = (CustomPermission, CustomTokenAuthentication)
-
     def get(self, request):
         return JsonResponse(UserCreateSerializer(self.request.user).data, safe=False)
 
 
-class UserDashabordViews(ModelViewSet):
-    # permission_classes = (CustomPermission, CustomTokenAuthentication)
+class UserActionView(ModelViewSet):
+    @action(detail=True, method=["post"], permission_class=[IsAuthenticated])
+    def reservedBook(self, request):
+        id, start_date, end_date = json.load(request)
+        if not (id and start_date and end_date):
+            return JsonResponse({"error": "Bad Request"}, status=403)
+        user = request.user
+        if user:
+            try:
+                book = Book.objects.get(id=id)
+            except Book.DoesNotExist:
+                return JsonResponse({"error": "Book Specified Not Found"}, status=404)
+            user.reserve_book(book=book, start_date=start_date, end_date=end_date)
+        else:
+            return JsonResponse({"error": "Invalid request method"}, status=405)
 
+    @action(detail=True, method=["get"], permission_class=[IsAuthenticated])
+    def lentBook(self, request, id: int, start_date, end_date, user: UserAccount):
+        id, start_date, end_date = json.load(request)
+        if not (id and start_date and end_date):
+            return JsonResponse({"error": "Bad Request"}, status=403)
+        user = request.user
+        if user:
+            try:
+                book = Book.objects.get(id=id)
+            except Book.DoesNotExist:
+                return JsonResponse({"error": "Book Specified Not Found"}, status=404)
+            user.reserve_book(book=book, start_date=start_date, end_date=end_date)
+        else:
+            return JsonRe
+
+
+class UserDashabordViews(ModelViewSet):
     def get(self, request):
         return JsonResponse(UserCreateSerializer(self.request.user).data, safe=False)
 
@@ -238,35 +266,3 @@ class GetAllBooksByAuthor(APIView):
         all_books = Book.objects.filter(author_icontains=author)
         serializer = BookSerializer(all_books, many=True)
         return JsonResponse({"books": serializer.data})
-
-
-class AdminDashabordView(APIView):
-    name = "isAdmin"
-    # permission_classes = (CustomPermission, CustomTokenAuthentication)
-
-    def get_user(self, request):
-        return self.request.user
-
-    def add_new_book(self, request):
-        # Logic to add a new book
-        return Response("New book added")
-
-    def remove_book(self, request):
-        # Logic to remove a book
-        return Response("Book removed")
-
-    def get_all_borrowed_books(self, request):
-        # Logic to get all borrowed books
-        return Response("List of borrowed books")
-
-    def get_payment_details(self, request):
-        # Logic to get payment details
-        return Response("Payment details")
-
-    def remove_payment(self, request):
-        # Logic to remove payment
-        return Response("Payment removed")
-
-    def modify_book(self, request):
-        # Logic to modify a book
-        return Response("Book modified")

@@ -99,7 +99,8 @@ class Balance(models.Model):
 class Reserved(models.Model):
     book = models.ManyToManyField(Book, related_name="reservation")
     borrow_date = models.DateField(default=timezone.now)
-    due_date = models.DateField(null=True, blank=True)
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return f"Reserved book"
@@ -219,42 +220,50 @@ class UserAccount(AbstractBaseUser):
     preferance = models.OneToOneField(UserPreferance, on_delete=models.CASCADE)
     lent = models.ManyToManyField(Lend)
     reserved = models.ManyToManyField(Reserved)
-
+    reservedBook = models.IntegerField(default=0)
+    lentReserved = models.ManyToManyField(default=0)
     objects = CustomUserManager()
-
     USERNAME_FIELD = "matric_number"
     REQUIRED_FIELDS = ["full_name", "department", "expected_year_of_graduation"]
 
     def __str__(self):
         return self.matric_number
 
-    def lend_book(self, book, outlay, cost_per_day, accrued):
-        if self.balance.total_amount >= outlay:
-            lend_instance = Lend.objects.create(
-                book=book,
-                borrow_date=timezone.now(),
-                outlay=outlay,
-                cost_per_day=cost_per_day,
-                accured=accrued,
-            )
-            self.lent.add(lend_instance)
-            self.balance.total_amount -= outlay
-            self.locked_amount += accrued
-            self.save()
-
-    def reserve_book(self, book, outlay, cost_per_day, accrued):
-        if self.balance.total_amount >= outlay:
+    def lent_book(self, book, start_date, end_date, range_in_days: int):
+        price_range = range_in_days * 50
+        if self.balance.total_amount > price_range:
             reserve_instance = Reserved.objects.create(
                 book=book,
                 borrow_date=timezone.now(),
-                outlay=outlay,
-                cost_per_day=cost_per_day,
-                accured=accrued,
+                start_date=start_date,
+                end_date=end_date,
             )
             self.reserved.add(reserve_instance)
-            self.balance.total_amount -= outlay
-            self.locked_amount += accrued
             self.save()
+        else:
+            return False
+        return True
+
+    def reserve_book(self, book, start_date, end_date, range_in_days: int):
+        price_range = range_in_days * 50
+        if self.balance.total_amount > price_range:
+            reserve_instance = Reserved.objects.create(
+                book=book,
+                borrow_date=timezone.now(),
+                start_date=start_date,
+                end_date=end_date,
+            )
+            self.reserved.add(reserve_instance)
+            self.save()
+        else:
+            return False
+        return True
+
+    def get_reserved_book(self):
+        return self.reserved
+
+    def get_len_book(self):
+        return self.lent
 
     def notify(self, type, message):
         Notification.create(user=self, type=type, message=message)

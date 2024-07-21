@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from share.models import Book, UserAccount
 from django.contrib.auth import get_user_model
-from share.models import AdminAccount
+from share.models import AdminAccount, Reserved, Lend
 
 UserModel = get_user_model()
 
@@ -44,6 +44,18 @@ class CreateAdminSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         admin = AdminAccount.objects.create_admin(**validated_data)
         return admin
+
+
+class ReservedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reserved
+        fields = ["__all__"]
+
+
+class LendSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lend
+        fields = ["__all__"]
 
 
 class AdminSerializer(serializers.ModelSerializer):

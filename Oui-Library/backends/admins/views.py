@@ -5,10 +5,16 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.decorators import permission_classes, api_view
 from django.contrib.auth.hashers import check_password
-from share.models import AdminAccount
+from share.models import AdminAccount, Lend, Reserved
 from share.utils import getOTP
 from rest_framework.views import status
-from .serializers import CreateAdminSerializer, BookSerializer, AdminSerializer
+from .serializers import (
+    CreateAdminSerializer,
+    BookSerializer,
+    AdminSerializer,
+    ReservedSerializer,
+    LendSerializer,
+)
 import datetime, json
 from share.utils import *
 from share.models import Book
@@ -201,6 +207,30 @@ def refresh_token(request):
             return JsonResponse({"error": "Refresh token is missing"}, status=400)
     else:
         return JsonResponse({"error": "Invalid request method"}, status=405)
+
+
+@csrf_exempt
+@api_view(["GET"])
+def get_user_reversed_plan(request, matric_number):
+    try:
+        user_reserved_plan = ReservedSerializer(
+            UserAccount.objects.get(matric_number=matric_number).get_reserved_book()
+        ).data
+        return JsonResponse(user_reserved_plan, status=400)
+    except Exception:
+        return JsonResponse({"error": "Refresh token is missing"}, status=400)
+
+
+@csrf_exempt
+@api_view(["GET"])
+def get_user_lent_plan(request, matric_number):
+    try:
+        user_reserved_plan = LendSerializer(
+            UserAccount.objects.get(matric_number=matric_number).get_lent_book()
+        ).data
+        return JsonResponse(user_reserved_plan, status=400)
+    except Exception:
+        return JsonResponse({"error": "Refresh token is missing"}, status=400)
 
 
 @csrf_exempt
