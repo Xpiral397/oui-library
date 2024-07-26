@@ -206,7 +206,7 @@ class UserActionView(ModelViewSet):
                 book = Book.objects.get(id=id)
             except Book.DoesNotExist:
                 return JsonResponse({"error": "Book Specified Not Found"}, status=404)
-            user.reserve_book(book=book, start_date=start_date, end_date=end_date)
+            user.lend_book(book=book, start_date=start_date, end_date=end_date)
         else:
             return JsonRe
 
