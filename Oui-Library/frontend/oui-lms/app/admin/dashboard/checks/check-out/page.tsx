@@ -1,15 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Sidebar, { Books } from "../../../dashboard/reserves/sidebar";
+
 import { useRouter } from "next/navigation";
 import Book from "@/public/books.jpg";
 import { Category, CategoryRender, DuePlans } from ".././component/component";
 import { ScrollShadow } from "@nextui-org/react";
-import { InitialData } from "@/app/context/type";
+import { Books, InitialData } from "@/app/context/type";
 import { loadData } from "@/app/context/clientStorage/save";
 import { Cancel, Person } from "@mui/icons-material";
 import { Input } from "@nextui-org/input";
 import { LendBooks, LendBooksRender } from "@/app/dashboard/expenses/component";
+import Sidebar from "@/app/dashboard/discover/sidebar";
 export type Loading = "Loading";
 export type Unauthenticated = "unathenticated";
 export default function Page() {
@@ -28,37 +29,6 @@ export default function Page() {
   }, []);
   const [selectedBooks, setSelectedBooks] = useState<Books>({} as Books);
   const [matricNumber, setStudentMatricNumber] = useState<string | null>(null);
-  const [categories, setCategories] = useState<Category>({
-    categories: ["Fiction", "Science"], // Assuming there's only one category for simplicity
-    category: {
-      Fiction: Array.from({ length: 20 }, (_, index) => ({
-        id: `book_${index + 1}`,
-        cover: Book.src,
-        author: `Author ${index + 1}`,
-        title: `Book Title ${index + 1}`,
-        name: `Book Name ${index + 1}`,
-        rate: "5", // Example rating
-        rated: "Rated", // Example rated status
-        pages: "300", // Example number of pages
-        rating: "4.5", // Example rating
-        reviews: "100", // Example number of reviews
-        description: `Description of book ${index + 1}`, // Example description
-      })),
-      Science: Array.from({ length: 20 }, (_, index) => ({
-        id: `book_${index + 1}`,
-        cover: Book.src,
-        author: `Author ${index + 1}`,
-        title: `Book Title ${index + 1}`,
-        name: `Book Name ${index + 1}`,
-        rate: "5", // Example rating
-        rated: "Rated", // Example rated status
-        pages: "300", // Example number of pages
-        rating: "4.5", // Example rating
-        reviews: "100", // Example number of reviews
-        description: `Description of book ${index + 1}`, // Example description
-      })),
-    },
-  });
 
   return (
     <div className=" flex lg:flex-row flex-col bg-slate-50 w-full h-full ">
@@ -109,7 +79,7 @@ export default function Page() {
               fontSize="small"
               color="secondary"
             />
-            <Sidebar Book={selectedBooks} checkInFor={matricNumber} />
+            <Sidebar Book={selectedBooks} />
           </div>
         </div>
       )}

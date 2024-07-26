@@ -1,14 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Sidebar, { Books } from "../../dashboard/reserves/sidebar";
+
 import { useRouter } from "next/navigation";
 import Book from "@/public/books.jpg";
 import { Category } from "./component/component";
 import { ScrollShadow } from "@nextui-org/react";
-import { InitialData } from "@/app/context/type";
+import { Books, InitialData } from "@/app/context/type";
 import { loadData } from "@/app/context/clientStorage/save";
 import { Cancel } from "@mui/icons-material";
 import { LendBooks } from "@/app/dashboard/expenses/component";
+import Sidebar from "@/app/dashboard/discover/sidebar";
 export type Loading = "Loading";
 export type Unauthenticated = "unathenticated";
 export default function Page() {

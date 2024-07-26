@@ -2,9 +2,6 @@
 import { ScrollShadow } from "@nextui-org/react";
 import Sidebar from "./sidebar";
 import { ReactNode, useContext } from "react";
-import UseUserPreferance from "../context/useSelectBooks/usePreferance";
-import UseCategoryProvider from "../context/useSelectBooks/useCategory";
-import UseRecomendationProvider from "../context/useSelectBooks/useRecomended";
 
 export default function DashboardLayout({
   children,
@@ -43,9 +40,5 @@ export default function DashboardLayout({
 }
 
 function Slot({ children }: { children: ReactNode }) {
-  return (
-   
-          <div className="w-full h-full">{children}</div>;
-
-  );
+  return <div className="w-full h-full">{children}</div>;
 }

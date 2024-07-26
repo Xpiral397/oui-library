@@ -16,7 +16,7 @@ import {
   User,
 } from "@nextui-org/react";
 import React, { useState } from "react";
-import { Books } from "../../../dashboard/reserves/sidebar";
+// import { Books } from "../../../dashboard/reserves/sidebar";
 import {
   ArrowBackIos,
   ArrowForwardIos,
@@ -40,6 +40,7 @@ import {
 } from "@mui/icons-material";
 import { LendBooksRender } from "@/app/dashboard/expenses/component";
 import { LendBooks } from "@/app/dashboard/lend/component";
+import { Books } from "@/app/context/type";
 
 export interface Category {
   categories: string[];

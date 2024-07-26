@@ -1,18 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Sidebar, { Books } from "../../dashboard/reserves/sidebar";
 import { useRouter } from "next/navigation";
 import Book from "@/public/books.jpg";
-import {
-  Category,
-  CategoryRender,
-  Recommended,
-  Reserved,
-} from "./component/component";
+import { Category, Reserved } from "./component/component";
 import { ScrollShadow } from "@nextui-org/react";
-import { InitialData } from "@/app/context/type";
+import { Books, InitialData } from "@/app/context/type";
 import { loadData } from "@/app/context/clientStorage/save";
 import { Cancel } from "@mui/icons-material";
+import { AdminBooks } from "../books/adminSidebar";
+import Sidebar from "@/app/dashboard/discover/sidebar";
 export type Loading = "Loading";
 export type Unauthenticated = "unathenticated";
 export default function Page() {
@@ -22,14 +18,17 @@ export default function Page() {
   );
   const router = useRouter();
   useEffect(() => {
-    const store = loadData();
+    const store = loadData().auth as unknown as InitialData;
+    console.log(store.auth);
     if (!store.auth.isAuthenticated) {
       router.push("/auth/signin");
     } else {
       setStore(store);
     }
   }, []);
-  const [selectedBooks, setSelectedBooks] = useState<Books>({} as Books);
+  const [selectedBooks, setSelectedBooks] = useState<AdminBooks>(
+    {} as AdminBooks
+  );
   const [categories, setCategories] = useState<Category>({
     categories: ["Fiction", "Science"], // Assuming there's only one category for simplicity
     category: {
@@ -101,7 +100,7 @@ export default function Page() {
               fontSize="small"
               color="secondary"
             />
-            <Sidebar Book={selectedBooks} />
+            <Sidebar Book={selectedBooks as any} />
           </div>
         </div>
       )}

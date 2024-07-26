@@ -10,6 +10,7 @@ import { loadData } from "@/app/context/clientStorage/save";
 import { Cancel } from "@mui/icons-material";
 import { LendBooks, LendBooksRender } from "./component";
 import Sidebar from "../discover/sidebar";
+import { AnyCnameRecord } from "dns";
 export type Loading = "Loading";
 export type Unauthenticated = "unathenticated";
 export default function Page() {
@@ -21,13 +22,14 @@ export default function Page() {
   useEffect(() => {
     const store = loadData().auth as any;
     if (!store.auth.isAuthenticated) {
+      alert(store.auth.isAuthenticate);
       router.push("/auth/signin");
     } else {
       setStore(store);
     }
   }, []);
   const [selectedBooks, setSelectedBooks] = useState<Books>({} as Books);
-  const [categories, setCategories] = useState<Category>({
+  const [categories, setCategories] = useState<any>({
     categories: ["Fiction", "Science"], // Assuming there's only one category for simplicity
     category: {
       Fiction: Array.from({ length: 20 }, (_, index) => ({
@@ -71,19 +73,21 @@ export default function Page() {
             <section className="p-1 bg-inherit w-full">
               <Reserved
                 isAdmin={false}
-                RecomendBooks={Array.from({ length: 3 }, (_, index) => ({
-                  id: `book_${index + 1}`,
-                  cover: Book.src,
-                  author: `Author ${index + 1}`,
-                  title: `Book Title ${index + 1}`,
-                  name: `Book Name ${index + 1}`,
-                  rate: "5", // Example rating
-                  rated: "Rated", // Example rated status
-                  pages: "300", // Example number of pages
-                  rating: "4.5", // Example rating
-                  reviews: "100", // Example number of reviews
-                  description: `Description of book ${index + 1}`, // Example description
-                }))}
+                RecomendBooks={
+                  Array.from({ length: 3 }, (_, index) => ({
+                    id: `book_${index + 1}`,
+                    cover: Book.src,
+                    author: `Author ${index + 1}`,
+                    title: `Book Title ${index + 1}`,
+                    name: `Book Name ${index + 1}`,
+                    rate: "5", // Example rating
+                    rated: "Rated", // Example rated status
+                    pages: "300", // Example number of pages
+                    rating: "4.5", // Example rating
+                    reviews: "100", // Example number of reviews
+                    description: `Description of book ${index + 1}`, // Example description
+                  })) as any
+                }
               />
             </section>
           </div>

@@ -27,7 +27,7 @@ export default function Sidebar() {
   }[] = [
     {
       name: "Books",
-      links: "/admin/books",
+      links: "/admin/dashboard/books",
       icon: (
         <div
           className={`flex items-center w-ful h-full justify-center rounded-md py-1 px-1 text-white ${
@@ -53,7 +53,7 @@ export default function Sidebar() {
     // },
     {
       name: "Reserved Books",
-      links: "/admin/reserved",
+      links: "/admin/dashboard/reserved",
       icon: (
         <div
           className={`flex items-center w-ful h-full justify-center rounded-md py-1 px-1 text-white ${
@@ -66,7 +66,7 @@ export default function Sidebar() {
     },
     {
       name: "Lend Books",
-      links: "/admin/lend",
+      links: "/admin/dashboard/lend",
       icon: (
         <div
           className={`flex items-center w-ful h-full justify-center rounded-md py-1 px-1 text-white ${
@@ -79,7 +79,7 @@ export default function Sidebar() {
     },
     {
       name: "Due Books",
-      links: "/admin/due",
+      links: "/admin/dashboard/due",
       icon: (
         <div
           className={`flex items-center w-ful h-full justify-center rounded-md py-1 px-1 text-white ${
@@ -92,7 +92,7 @@ export default function Sidebar() {
     },
     {
       name: "Checks",
-      links: "/admin/checks",
+      links: "/admin/dashboard/checks",
       icon: (
         <div
           className={`flex items-center w-ful h-full justify-center rounded-md py-1 px-1 text-white ${

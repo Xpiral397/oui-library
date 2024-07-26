@@ -16,7 +16,7 @@ import {
   User,
 } from "@nextui-org/react";
 import React, { useState } from "react";
-import { Books } from "../../../dashboard/reserves/sidebar";
+
 import {
   ArrowBackIos,
   ArrowForwardIos,
@@ -34,11 +34,13 @@ import {
   SafetyCheck,
   Search,
 } from "@mui/icons-material";
+import { AdminBooks } from "../../books/adminSidebar";
+import { Books } from "@/app/context/type";
 
 export interface Category {
   categories: string[];
   category: {
-    [key: string]: Books[];
+    [key: string]: AdminBooks[];
   };
 }
 
@@ -145,6 +147,7 @@ export function Reserved({
   isAdmin: boolean;
 }) {
   const [student, setStudent] = useState<any>("Olamide Adebunmi");
+  const [search, StudentData] = useState();
   return (
     <div className="bg-slate-50 rounded-lg p-3 shadow-md border boder-slate-500  flex flex-col items-center w-full h-full justify-center">
       <div className="flex w-full justify-between">
@@ -183,8 +186,10 @@ export function Reserved({
       <div className="flex justify-center items-center  w-full sm:w-1/2 mt-10 mb-8">
         <Input
           placeholder="Student Matric Number"
-          className=" max-w-lg"
-          size="sm"
+          className="max-w-lg"
+          classNames={{
+            input: "h-10",
+          }}
           startContent={
             <div className="w-5 h-5 rounded-full bgslate-200">
               <Search fontSize="small" color="secondary" />
@@ -192,7 +197,11 @@ export function Reserved({
           }
           endContent={
             // <div className="w-5 h-5 rounded-full ">
-            <Button className="-mx-5" size="sm" color="secondary">
+            <Button
+              className=" w-5 px-2 -mx-2 h-10"
+              size="lg"
+              color="secondary"
+            >
               Get Student
             </Button>
             // </div>
@@ -276,7 +285,7 @@ export function CategoryRender({
                   <BooksRender
                     isAdmin={isAdmin}
                     key={category?.id ?? index}
-                    Category={category}
+                    Category={category as any}
                   />
                 ))}
               </div>
