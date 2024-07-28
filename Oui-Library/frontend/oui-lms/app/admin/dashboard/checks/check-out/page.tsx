@@ -72,7 +72,7 @@ export default function Page() {
       </ScrollShadow>
 
       {selectedBooks && show && (
-        <div className="absolute right-0 top-0 bg-white shadow-2xl flex py-5 px-5 justify-center w-[400px] h-full  ">
+        <div className="absolute right-0 top-0 bg-white shadow-2xl flex py-5 px-5 justify-center sm:w-[350px] md:w-[400px] h-full  ">
           <div onClick={() => setshow(!show)}>
             <Cancel
               className=" mb-10 absolute top-0 mt-2 right-1 left-0 py-1 animate-pulse text-[25px]"

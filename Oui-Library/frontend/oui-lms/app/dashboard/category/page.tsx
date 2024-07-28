@@ -98,7 +98,7 @@ export default function Page() {
         </div>
       </ScrollShadow>
       {selectedBooks && show && (
-        <div className="absolute right-0 top- bg-gradient-to-r  from-amber-50 via-yellow-50 to-slate-50 shadow-2xl flex py-5 px-5 justify-center w-[400px] h-full z-[100] ">
+        <div className="absolute right-0 top- bg-gradient-to-r  from-amber-50 via-yellow-50 to-slate-50 shadow-2xl flex py-5 px-5 justify-center sm:w-[350px] md:w-[400px] h-full z-[100] ">
           <ScrollShadow
             hideScrollBar
             orientation="vertical"
