@@ -14,7 +14,7 @@ import { Admin, User } from "./type";
 import { loadData } from "./clientStorage/save";
 
 // export const baseURL = "https://ouilibray.pythonanywhere.com";
-export const baseURL = "https://ouilibrarys.pythonanywhere.com/";
+export const baseURL = "https://ouilibrarys.pythonanywhere.com";
 const api = axios.create({
   baseURL: "https://ouilibrarys.pythonanywhere.com/", // Your API base URL
   headers: {
