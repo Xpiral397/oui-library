@@ -9,7 +9,7 @@ import { Books, InitialData } from "@/app/context/type";
 import { loadData } from "@/app/context/clientStorage/save";
 import { Cancel, Person } from "@mui/icons-material";
 import { Input } from "@nextui-org/input";
-import { LendBooks, LendBooksRender } from "@/app/dashboard/expenses/component";
+// import { LendBooks, LendBooksRender } from "@/app/dashboard/expenses/component";
 import Sidebar from "@/app/dashboard/discover/sidebar";
 export type Loading = "Loading";
 export type Unauthenticated = "unathenticated";
@@ -49,7 +49,7 @@ export default function Page() {
           </div>
           <div className="p-5 rounded-lg space-y-3 w-full">
             <section className="p-1 bg-inherit w-full h-full">
-              <LendBooks
+              {/* <LendBooks
                 type={"check-out"}
                 isAdmin={true}
                 RecomendBooks={Array.from({ length: 3 }, (_, index) => ({
@@ -65,7 +65,7 @@ export default function Page() {
                   reviews: "100", // Example number of reviews
                   description: `Description of book ${index + 1}`, // Example description
                 }))}
-              />
+              /> */}
             </section>
           </div>
         </div>
