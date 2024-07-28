@@ -45,7 +45,6 @@ export interface Category {
     [key: string]: Books[];
   };
 }
-
 export default function BooksRender({
   Category,
   key,
