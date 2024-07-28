@@ -263,7 +263,20 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarMenu>
-        <div className="mx-4 mt-2 flex flex-col gap-2"></div>
+        <div className="mx-4 mt-2 flex flex-col gap-2">
+          <Button
+            onClick={
+              userData && userData?.auth?.accessToken
+                ? logout
+                : () => {
+                    router.push("/auth/login");
+                  }
+            }
+            className="bg-gradient-to-tr from-secondary-500 to-amber-500 text-slate-50 font-semibold"
+          >
+            {userData && userData?.auth?.accessToken ? "Logout" : "Login"}
+          </Button>
+        </div>
       </NavbarMenu>
     </NextUINavbar>
   );

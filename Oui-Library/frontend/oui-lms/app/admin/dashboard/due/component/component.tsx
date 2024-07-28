@@ -16,7 +16,7 @@ import {
   User,
 } from "@nextui-org/react";
 import React, { useState } from "react";
-import { Books } from "../../../dashboard/reserves/sidebar";
+
 import {
   ArrowBackIos,
   ArrowForwardIos,
@@ -38,8 +38,7 @@ import {
   SafetyCheck,
   Search,
 } from "@mui/icons-material";
-import { LendBooksRender } from "@/app/dashboard/expenses/component";
-
+import { Books } from "@/app/context/type";
 export interface Category {
   categories: string[];
   category: {
@@ -247,13 +246,13 @@ export function DuePlans({
           </h1>
           <div className="mt-20 w-full h-full items-center flex justify-center text-sm">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-10">
-              {RecomendBooks.map((category, index) => (
+              {/* {RecomendBooks.map((category, index) => (
                 <LendBooksRender
                   key={category?.id ?? index}
                   isAdmin={true}
                   Category={category}
                 />
-              ))}
+              ))} */}
             </div>
           </div>
         </div>

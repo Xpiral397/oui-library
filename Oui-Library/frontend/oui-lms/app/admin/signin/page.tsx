@@ -163,7 +163,7 @@ export default function SiginCar() {
     <div className="flex justify-center items-center w-full h-full">
       <div className="flex justify-between items-center space-x-[10%] mr-10 ">
         {/* <Image src={Books.src} className="lg:flex hidden w-[500px]" /> */}
-        <div className="min-w-[500px] h-full rounded-lg shadow-2xl bg-zinc-50 flex flex-col px-3 py-5 ">
+        <div className="w-[350px] p-2 md:min-w-[500px] h-full rounded-lg shadow-2xl bg-zinc-50 flex flex-col md:px-3 md:py-5 ">
           <div className="flex items-center  space-x-4">
             <Image width={100} src={Logo.src} />
             <div>

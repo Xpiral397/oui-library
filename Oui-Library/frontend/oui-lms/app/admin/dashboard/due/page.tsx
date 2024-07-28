@@ -26,7 +26,7 @@ export default function Page() {
     }
   }, []);
   const [selectedBooks, setSelectedBooks] = useState<Books>({} as Books);
-  const [categories, setCategories] = useState<Category>({
+  const [categories, setCategories] = useState({
     categories: ["Fiction", "Science"], // Assuming there's only one category for simplicity
     category: {
       Fiction: Array.from({ length: 20 }, (_, index) => ({
@@ -70,19 +70,21 @@ export default function Page() {
             <section className="p-1 bg-inherit w-full h-full">
               <DuePlans
                 isAdmin={true}
-                RecomendBooks={Array.from({ length: 3 }, (_, index) => ({
-                  id: `book_${index + 1}`,
-                  cover: Book.src,
-                  author: `Author ${index + 1}`,
-                  title: `Book Title ${index + 1}`,
-                  name: `Book Name ${index + 1}`,
-                  rate: "5", // Example rating
-                  rated: "Rated", // Example rated status
-                  pages: "300", // Example number of pages
-                  rating: "4.5", // Example rating
-                  reviews: "100", // Example number of reviews
-                  description: `Description of book ${index + 1}`, // Example description
-                }))}
+                RecomendBooks={
+                  Array.from({ length: 3 }, (_, index) => ({
+                    id: `book_${index + 1}`,
+                    cover: Book.src,
+                    author: `Author ${index + 1}`,
+                    title: `Book Title ${index + 1}`,
+                    name: `Book Name ${index + 1}`,
+                    rate: "5", // Example rating
+                    rated: "Rated", // Example rated status
+                    pages: "300", // Example number of pages
+                    rating: "4.5", // Example rating
+                    reviews: "100", // Example number of reviews
+                    description: `Description of book ${index + 1}`, // Example description
+                  })) as any
+                }
               />
             </section>
           </div>

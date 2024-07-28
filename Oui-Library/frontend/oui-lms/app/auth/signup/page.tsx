@@ -212,7 +212,7 @@ export default function SiginCar() {
           </div>
         </div>
         <div className="w-full flex justify-center items-center">
-          <form className="w-[300px] lg:w-[450px] space-y-10 mt-10">
+          <form className="w-[350px] p-2 md:min-w-[500px] h-full rounded-lg shadow-2xl bg-zinc-50 flex flex-col md:px-3 md:py-5 ">
             <div className="flex flex-col space-y-3 w-full justify-center ">
               <div className="flex justify-between space-x-1">
                 <div>
@@ -229,7 +229,7 @@ export default function SiginCar() {
                     variant="bordered"
                     classNames={{
                       inputWrapper:
-                        "border border-slate-300 focus:outline-none",
+                        "h-10 border border-slate-300 focus:outline-none",
                       mainWrapper:
                         "text-small focus:outline-none border-transparent focus:border-transparent focus:ring-0",
                     }}
@@ -252,7 +252,7 @@ export default function SiginCar() {
                     className=""
                     classNames={{
                       inputWrapper:
-                        "border border-slate-300 focus:outline-none",
+                        "h-10 border border-slate-300 focus:outline-none",
                       mainWrapper:
                         "text-small focus:outline-none border-transparent focus:border-transparent focus:ring-0",
                     }}
@@ -273,7 +273,7 @@ export default function SiginCar() {
                   onChange={(e) => setMatric(e.target.value)}
                   isInvalid={error.Matric != ""}
                   errorMessage={error.Matric}
-                  classNames={{ inputWrapper: "font-[700]" }}
+                  classNames={{ inputWrapper: "h-10 font-[700]" }}
                   variant="bordered"
                   color="default"
                   startContent={<Token color="warning" />}
@@ -289,7 +289,8 @@ export default function SiginCar() {
                 </label>
                 <Input
                   classNames={{
-                    inputWrapper: "border border-slate-300 focus:outline-none",
+                    inputWrapper:
+                      "h-10 border border-slate-300 focus:outline-none",
                   }}
                   onChange={(e) => setTel(e.target.value)}
                   errorMessage={error.Tel}
@@ -308,7 +309,8 @@ export default function SiginCar() {
                 </label>
                 <Input
                   classNames={{
-                    inputWrapper: "border border-slate-300 focus:outline-none",
+                    inputWrapper:
+                      "h-10 border border-slate-300 focus:outline-none",
                   }}
                   onChange={(e) => setEmail(e.target.value)}
                   variant="bordered"
@@ -438,7 +440,8 @@ export default function SiginCar() {
                 </label>
                 <Input
                   classNames={{
-                    inputWrapper: "border border-slate-300 focus:outline-none",
+                    inputWrapper:
+                      "h-10 border border-slate-300 focus:outline-none",
                   }}
                   variant="bordered"
                   onChange={(e) => setPassword(e.target.value)}
@@ -480,7 +483,7 @@ export default function SiginCar() {
               variant="bordered"
               // disabled={disabled}
               isLoading={loading}
-              className="bg-purple-700 w-full text-white font-[700]"
+              className="h-10 bg-purple-700 w-full text-white font-[700]"
             >
               Sign Up
             </Button>

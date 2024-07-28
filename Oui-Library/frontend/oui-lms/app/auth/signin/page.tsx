@@ -205,7 +205,7 @@ export default function SiginCar() {
                   <Input
                     classNames={{
                       inputWrapper:
-                        "font-[700] border border-slate-300 focus:outline-none",
+                        "h-10 font-[700] border border-slate-300 focus:outline-none",
                     }}
                     onChange={(e) => setMatric(e.target.value)}
                     isInvalid={error.Matric != ""}
@@ -226,6 +226,7 @@ export default function SiginCar() {
                   </label>
                   <Input
                     classNames={{
+                      input: "h-10",
                       inputWrapper:
                         "border border-slate-300 focus:outline-none",
                     }}
