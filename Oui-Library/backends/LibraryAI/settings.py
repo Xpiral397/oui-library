@@ -245,10 +245,10 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
-GOOGLE_OAUTH2_CLIENT_SECRETS_FILE = os.path.join(BASE_DIR, "credential.json")
-print(GOOGLE_OAUTH2_CLIENT_SECRETS_FILE, "kop")
-GOOGLE_OAUTH2_SCOPES = ["https://www.googleapis.com/auth/drive.file"]
-GOOGLE_OAUTH2_REDIRECT_URI = "http://localhost:8000/oauth2callback"
+# GOOGLE_OAUTH2_CLIENT_SECRETS_FILE = os.path.join(BASE_DIR, "credential.json")
+# print(GOOGLE_OAUTH2_CLIENT_SECRETS_FILE, "kop")
+# GOOGLE_OAUTH2_SCOPES = ["https://www.googleapis.com/auth/drive.file"]
+# GOOGLE_OAUTH2_REDIRECT_URI = "http://localhost:8000/oauth2callback"
 
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
