@@ -50,19 +50,30 @@ class BookSerializer(serializers.ModelSerializer):
         fields = "__all__"  # Serialize all fields
 
 
-class ReservedSerializer(serializers.ModelSerializer):
-    book = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-
-    class Meta:
-        model = Reserved
-        fields = "__all__"  # Serialize all fields
-
-
 class LendSerializer(serializers.ModelSerializer):
-    book = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    book = serializers.PrimaryKeyRelatedField(read_only=True)
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Lend
+        fields = "__all__"  # Serialize all fields
+
+
+class LendSerializer2(serializers.ModelSerializer):
+    book = serializers.PrimaryKeyRelatedField(read_only=True)
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = Lend
+        fields = "__all__"  # Serialize all fields
+
+
+class ReservedSerializer(serializers.ModelSerializer):
+    book = serializers.PrimaryKeyRelatedField(read_only=True)
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = Reserved
         fields = "__all__"  # Serialize all fields
 
 
@@ -70,3 +81,11 @@ class BalanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Balance
         fields = "__all__"  # Serialize all fields
+
+
+class LendSerializer2(serializers.ModelSerializer):
+    book = BookSerializer(read_only=True)
+
+    class Meta:
+        model = Lend
+        fields = "__all__"

@@ -1,17 +1,18 @@
 # accounts/views.py
 from rest_framework import viewsets, status
 
-from rest_framework.decorators import action
+from rest_framework.decorators import action, permission_classes, api_view
 from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from .models import UserAccount, Book, Lend
+from .models import UserAccount, Book, Lend, Reserved
 from .serializers import (
     BookSerializer,
     UserAccountSerializer,
     BalanceSerializer,
     ReservedSerializer,
     LendSerializer,
+    LendSerializer2,
 )
 from .auth import IsAdminPermission
 
@@ -86,24 +87,107 @@ class UserAccountViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
     def lend_new_book(self, request, id):
+
         try:
             book = Book.objects.get(id=id)
-            if book.quantity - 1 > -1:
-                bookId, duePrice, startDate, endDate = {*request.POST.dict()}
-                reserve = LendSerializer(
-                    data={
-                        "book": book,
-                        "endDate": endDate,
-                        "startDate": startDate,
-                        "cost_per_day": duePrice,
-                    }
+            try:
+                plan = Lend.objects.get(user=request.user, book=Book.objects.get(id=id))
+                return Response(
+                    {"Error": "Book  Not Found"},
+                    status=status.HTTP_208_ALREADY_REPORTED,
                 )
-                if reserve.is_valid(raise_exception=False):
-                    reserve.save()
-                    return LendSerializer(Lend.objects.all(), many=True)
+            except Lend.DoesNotExist as e:
+                pass
+            if not Lend.objects.filter(user=request.user, book=book).exists():
+                if book.quantity - 1 > -1:
+                    bookId, duePrice, startDate, endDate = [
+                        request.data.get("bookId"),
+                        request.data.get("duePrice"),
+                        request.data.get("startDate"),
+                        request.data.get("endDate"),
+                    ]
+
+                    lend = Lend(
+                        user=request.user,
+                        book=book,
+                        start_date=startDate,
+                        due_date=endDate,
+                    )
+                    print(Lend.objects.all().values())
+                    lend.save()
+
+                    return Response("Success")
+                return Response("Failure", status=status.HTTP_406_NOT_ACCEPTABLE)
         except Book.DoesNotExist as e:
             return Response(
-                {"Error": "Categroy Not Found"}, status=status.HTTP_404_NOT_FOUND
+                {"Error": "Book  Not Found"}, status=status.HTTP_404_NOT_FOUND
+            )
+
+    @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
+    def reserve_new_book(self, request, id):
+        try:
+            book = Book.objects.get(id=id)
+            try:
+                plan = Reserved.objects.get(
+                    user=request.user, book=Book.objects.get(id=id)
+                )
+                return Response(
+                    {"Error": "Book  Not Found"},
+                    status=status.HTTP_208_ALREADY_REPORTED,
+                )
+            except Reserved.DoesNotExist as e:
+                pass
+            if not Reserved.objects.filter(user=request.user, book=book).exists():
+                if book.quantity - 1 > -1:
+                    bookId, duePrice, startDate, endDate = [
+                        request.data.get("bookId"),
+                        request.data.get("duePrice"),
+                        request.data.get("startDate"),
+                        request.data.get("endDate"),
+                    ]
+
+                    lend = Reserved(
+                        user=request.user,
+                        book=book,
+                        start_date=startDate,
+                        due_date=endDate,
+                    )
+                    print(Reserved.objects.all().values())
+                    lend.save()
+
+                    return Response("Success")
+                return Response("Failure", status=status.HTTP_406_NOT_ACCEPTABLE)
+        except Book.DoesNotExist as e:
+            return Response(
+                {"Error": "Book  Not Found"}, status=status.HTTP_404_NOT_FOUND
+            )
+
+    @action(detail=True, methods=["get"], permission_classes=[IsAuthenticated])
+    def check_lent(self, request, id):
+        # Lend.objects.all().delete()
+        print(Lend.objects.all().values())
+        try:
+            plan = Lend.objects.get(user=request.user, book=Book.objects.get(id=id))
+            serial = LendSerializer(plan)
+            # if serial.is_valid(raise_exception=True):
+            return Response(serial.data, status=status.HTTP_200_OK)
+        except Lend.DoesNotExist as e:
+            return Response(
+                {"Error": "Book  Not Found"}, status=status.HTTP_404_NOT_FOUND
+            )
+
+    @action(detail=True, methods=["get"], permission_classes=[IsAuthenticated])
+    def check_reserved(self, request, id):
+        # Lend.objects.all().delete()
+        # print(Lend.objects.all().values())
+        try:
+            plan = Reserved.objects.get(user=request.user, book=Book.objects.get(id=id))
+            serial = ReservedSerializer(plan)
+            # if serial.is_valid(raise_exception=True):
+            return Response(serial.data, status=status.HTTP_200_OK)
+        except Reserved.DoesNotExist as e:
+            return Response(
+                {"Error": "Book  Not Found"}, status=status.HTTP_404_NOT_FOUND
             )
 
     @action(detail=True, methods=["get"])
@@ -181,14 +265,12 @@ class UserAccountViewSet(viewsets.ModelViewSet):
             )
 
     @action(detail=True, methods=["get"], permission_classes=[IsAuthenticated])
-    def get_user_lent_plan(self, request, pk=None):
+    def get_lent_books(self, request, pk=None):
         try:
-            user = UserAccount.objects.get(
-                matric_number=request.user.matric_number
-            ).lent
-            # print(user)
-            return Response({"lent_plan": LendSerializer(user).data})
-        except UserAccount.DoesNotExist:
+
+            print(Lend.objects.all().values())
+            return Response(" HellO")
+        except Lend.DoesNotExist:
             return Response(
                 {"Error": "Unable to get user lent books"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -228,3 +310,11 @@ class UserAccountViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         # Implement delete operation
         pass
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def lent_books(request):
+    reserved_books = Lend.objects.filter(user=request.user)
+    serializer = LendSerializer2(reserved_books, many=True)
+    return Response(serializer.data)

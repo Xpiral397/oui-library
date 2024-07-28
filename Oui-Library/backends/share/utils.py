@@ -29,7 +29,7 @@ def getOTP():
     )
 
 
-Key = os.getenv("SECRET_KEY")
+Key = "82f8e1e443be8592f0d5519229c3caedb40e99e174098f4fae7f9fa7f3826b13"
 
 print(Key)
 
