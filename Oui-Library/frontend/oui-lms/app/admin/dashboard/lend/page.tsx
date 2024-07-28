@@ -8,7 +8,7 @@ import { ScrollShadow } from "@nextui-org/react";
 import { Books, InitialData } from "@/app/context/type";
 import { loadData } from "@/app/context/clientStorage/save";
 import { Cancel } from "@mui/icons-material";
-import { LendBooks } from "@/app/dashboard/expenses/component";
+// import { LendBooks } from "@/app/dashboard/expenses/component";
 import Sidebar from "@/app/dashboard/discover/sidebar";
 export type Loading = "Loading";
 export type Unauthenticated = "unathenticated";
@@ -27,7 +27,7 @@ export default function Page() {
     }
   }, []);
   const [selectedBooks, setSelectedBooks] = useState<Books>({} as Books);
-  const [categories, setCategories] = useState<Category>({
+  const [categories, setCategories] = useState<any>({
     categories: ["Fiction", "Science"], // Assuming there's only one category for simplicity
     category: {
       Fiction: Array.from({ length: 20 }, (_, index) => ({
@@ -43,19 +43,23 @@ export default function Page() {
         reviews: "100", // Example number of reviews
         description: `Description of book ${index + 1}`, // Example description
       })),
-      Science: Array.from({ length: 20 }, (_, index) => ({
-        id: `book_${index + 1}`,
-        cover: Book.src,
-        author: `Author ${index + 1}`,
-        title: `Book Title ${index + 1}`,
-        name: `Book Name ${index + 1}`,
-        rate: "5", // Example rating
-        rated: "Rated", // Example rated status
-        pages: "300", // Example number of pages
-        rating: "4.5", // Example rating
-        reviews: "100", // Example number of reviews
-        description: `Description of book ${index + 1}`, // Example description
-      })),
+      Science: Array.from(
+        { length: 20 },
+        (_, index) =>
+          ({
+            id: `book_${index + 1}`,
+            cover: Book.src,
+            author: `Author ${index + 1}`,
+            title: `Book Title ${index + 1}`,
+            name: `Book Name ${index + 1}`,
+            rate: "5", // Example rating
+            rated: "Rated", // Example rated status
+            pages: "300", // Example number of pages
+            rating: "4.5", // Example rating
+            reviews: "100", // Example number of reviews
+            description: `Description of book ${index + 1}`, // Example description
+          } as any)
+      ),
     },
   });
 
@@ -69,7 +73,7 @@ export default function Page() {
         <div className="w-full h-ful">
           <div className="p-5 rounded-lg space-y-3 w-full">
             <section className="p-1 bg-inherit w-full h-full">
-              <LendBooks
+              {/* <LendBooks
                 isAdmin={true}
                 RecomendBooks={Array.from({ length: 3 }, (_, index) => ({
                   id: `book_${index + 1}`,
@@ -84,7 +88,7 @@ export default function Page() {
                   reviews: "100", // Example number of reviews
                   description: `Description of book ${index + 1}`, // Example description
                 }))}
-              />
+              /> */}
             </section>
           </div>
         </div>
