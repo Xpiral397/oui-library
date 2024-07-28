@@ -58,7 +58,7 @@ export default function BooksRender({
   return (
     <div
       key={key}
-      className="relative transform hover:scale-105 transition-transform duration-300 shadow-mds rounded-lg sm:w-[250px] w-[200px]  h-[380px] bg-slate-200 flex  items-center justify-center flex-col"
+      className=" relative transform hover:scale-105 transition-transform duration-300 shadow-mds rounded-lg sm:w-[250px] w-[200px]  h-[380px] bg-slate-200 flex  items-center justify-center flex-col"
     >
       {isAdmin && (
         <div className="absolute right-2 top-0 ml-8 mt-2 space-x-3">
