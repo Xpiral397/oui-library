@@ -88,7 +88,7 @@ const authSlice = createSlice({
       }>
     ) {
       let user = action.payload.user;
-      state.isAuthenticated = true;
+      // state.isAuthenticated = true;
       save<InitialData>(
         "auth",
         {

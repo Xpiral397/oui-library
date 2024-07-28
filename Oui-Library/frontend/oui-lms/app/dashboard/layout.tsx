@@ -10,7 +10,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div>
-      <section className="relative sm:flex  hidden  h-screen  w-full ">
+      <section className="relative md:flex  hidden  h-screen  w-full ">
         <div className="max-w-[250px] mt-8 bg-white h-full">
           <Sidebar />
         </div>
@@ -23,7 +23,7 @@ export default function DashboardLayout({
         </ScrollShadow>
       </section>
 
-      <section className=" sm:hidden relative h-screen block">
+      <section className=" md:hidden relative h-screen block">
         <div className="absolute left-0 top-0 mt-30 z-50 h-full ">
           <Sidebar sm={false} />
         </div>

@@ -38,8 +38,8 @@ import {
   SafetyCheck,
   Search,
 } from "@mui/icons-material";
-import { LendBooksRender } from "@/app/dashboard/expenses/component";
-import { LendBooks } from "@/app/dashboard/lend/component";
+// import { LendBooksRender } from "@/app/dashboard/expenses/component";
+// import { LendBooks } from "@/app/dashboard/lend/component";
 import { Books } from "@/app/context/type";
 
 export interface Category {
@@ -249,13 +249,13 @@ export function DuePlans({
           </h1>
           <div className="mt-20 w-full h-full items-center flex justify-center text-sm">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-10">
-              {RecomendBooks.map((category, index) => (
+              {/* {RecomendBooks.map((category, index) => (
                 <LendBooksRender
                   key={category?.id ?? index}
                   isAdmin={true}
                   Category={category}
                 />
-              ))}
+              ))} */}
             </div>
           </div>
         </div>
@@ -334,11 +334,12 @@ export function CategoryRender({
               <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full gap-10 ">
                 {RecomendBooks.category[cateogry].map((category, index) =>
                   checkout ? (
-                    <LendBooksRender
-                      isAdmin={isAdmin}
-                      key={category?.id ?? index}
-                      Category={category}
-                    />
+                    // <LendBooksRender
+                    //   isAdmin={isAdmin}
+                    //   key={category?.id ?? index}
+                    //   Category={category}
+                    // />
+                    <>No Content</>
                   ) : (
                     <BooksRender
                       isAdmin={isAdmin}

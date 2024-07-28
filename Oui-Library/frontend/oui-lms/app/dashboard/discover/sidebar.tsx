@@ -96,25 +96,7 @@ export default function Sidebar({ Book }: { Book: Books }) {
           </p> */}
         </div>
       </div>
-      <div className="  rounded-lg bg-yellow-500 flex  font-[400] text-[12px] py-1 px-1 ">
-        <div className="items-center w-full h-full">
-          <p>{Book?.rated ?? 0}</p> <Star fontSize="small" color="inherit" />
-        </div>
-        <div className="items-center w-full h-full ">
-          <p>{Book?.total_pages ?? "0"}</p>
-          <p>pages</p>{" "}
-        </div>
-
-        <div className="items-center w-full h-full ">
-          <p>{Book?.rate ?? "0"}</p>
-          <p>ratings</p>{" "}
-        </div>
-
-        <div>
-          <p>{Book?.reviews ?? 0}</p>
-          <p>Reviews</p>
-        </div>
-      </div>
+      {/* - */}
       <Tabs radius="md" aria-label="Tabs radius">
         <Tab key={"description"} title={"Description"}>
           <Card className="max-w-[340px]">
@@ -153,7 +135,7 @@ export default function Sidebar({ Book }: { Book: Books }) {
               </span>
             </CardBody>
 
-            <CardFooter className="gap-3">
+            {/* <CardFooter className="gap-3">
               <div className="flex gap-1">
                 <p className="font-semibold text-default-400 text-small">4</p>
                 <p className=" text-default-400 text-small">
@@ -168,7 +150,7 @@ export default function Sidebar({ Book }: { Book: Books }) {
                   <ThumbDown />
                 </p>
               </div>
-            </CardFooter>
+            </CardFooter> */}
           </Card>
         </Tab>
         <Tab key={"Review"} title={"Reviews"}>

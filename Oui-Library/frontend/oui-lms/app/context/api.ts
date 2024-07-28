@@ -70,7 +70,7 @@ api.interceptors.response.use(
         if (current_user === "ADMIN" && store.getState().auth.admin) {
           store.dispatch(
             adminLogin({
-              admin: store.getState().auth.admin as Admin,
+              user: store.getState().auth.admin as Admin,
               accessToken,
               refreshToken: store.getState().auth.refreshToken ?? "",
             })

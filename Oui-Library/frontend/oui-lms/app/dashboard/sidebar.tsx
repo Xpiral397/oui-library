@@ -74,32 +74,32 @@ export default function Sidebar({ sm }: { sm?: boolean }) {
         </div>
       ),
     },
-    {
-      name: "Expenditure",
-      links: "/dashboard/expenses",
-      icon: (
-        <div
-          className={`flex items-center w-ful h-full justify-center rounded-md py-1 px-1 text-white ${
-            selected === "expenses" ? "bg-secondary-500" : "bg-slate-300"
-          }`}
-        >
-          <Payment color="inherit" fontSize="small" />
-        </div>
-      ),
-    },
-    {
-      name: "Checks",
-      links: "/dashboard/checks",
-      icon: (
-        <div
-          className={`flex items-center w-ful h-full justify-center rounded-md py-1 px-1 text-white ${
-            selected === "checks" ? "bg-secondary-500" : "bg-slate-300"
-          }`}
-        >
-          <Verified color="inherit" fontSize="small" />
-        </div>
-      ),
-    },
+    // {
+    //   name: "Expenditure",
+    //   links: "/dashboard/expenses",
+    //   icon: (
+    //     <div
+    //       className={`flex items-center w-ful h-full justify-center rounded-md py-1 px-1 text-white ${
+    //         selected === "expenses" ? "bg-secondary-500" : "bg-slate-300"
+    //       }`}
+    //     >
+    //       <Payment color="inherit" fontSize="small" />
+    //     </div>
+    //   ),
+    // },
+    // {
+    //   name: "Checks",
+    //   links: "/dashboard/checks",
+    //   icon: (
+    //     <div
+    //       className={`flex items-center w-ful h-full justify-center rounded-md py-1 px-1 text-white ${
+    //         selected === "checks" ? "bg-secondary-500" : "bg-slate-300"
+    //       }`}
+    //     >
+    //       <Verified color="inherit" fontSize="small" />
+    //     </div>
+    //   ),
+    // },
   ];
 
   return toggler ? (

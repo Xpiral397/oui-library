@@ -74,7 +74,7 @@ export default function BooksRender({
         setSelectedBooks(Category);
       }}
       key={key}
-      className="relative transform hover:scale-105 transition-transform duration-300 shadow-mds rounded-lg sm:w-[250px] w-[200px]  h-[420px]  bg-gradient-to-r from-slate-100 to-transparent flex  items-start justify-between flex-col"
+      className="py-2 px-2 relative transform hover:scale-105 transition-transform duration-300 shadow-mds rounded-lg sm:w-[250px] w-[250px]  h-[460px]  bg-gradient-to-r from-slate-100 to-transparent flex  items-start justify-between flex-col"
     >
       {!isAdmin && (
         <div className="absolute top-0 mt-2 ml-8 space-x-3 right-2">
@@ -89,57 +89,36 @@ export default function BooksRender({
           </p>
           <p>{Category?.total_pages}</p>
         </h1>
-        <h1 className="flex items-center h-full mt-1 space-x-3 font-semibold text-center rounded-lg text-ellipsis ">
+        {/* <h1 className="flex items-center h-full mt-1 space-x-3 font-semibold text-center rounded-lg text-ellipsis ">
           <p>
             <RemoveRedEye color="inherit" fontSize="small" />
           </p>
           <p>34</p>
-        </h1>
+        </h1> */}
       </div>
-      <div className="w-[180px] flex items-center justify-center sm:w-full">
+      <div className=" flex items-center justify-center sm:w-full">
         <Image
           src={baseURL + (Category?.image ? Category?.image : "")}
-          className="h-[250px]"
+          className="h-[250px] w-[250px]"
         />
       </div>
       <div className="w-full  text-sm text-slate-600">
         <h1 className="w-full px-3 mt-2 font-semibold text-center rounded-lg text-ellipsis">
+          <p>Title</p>
           {Category?.title}
         </h1>
-        <h1 className="flex justify-between w-full mt-1 font-semibold text-center rounded-lg text-ellipsis">
-          <p>
-            <Person /> Author
-          </p>
+        <h1 className="px-2 flex justify-between w-full mt-1 font-semibold text-center rounded-lg text-ellipsis">
+          <p>Author</p>
           <p>{Category?.author}</p>
         </h1>
-        <div className="flex items-center justify-between h-10 p-1 ">
-          <h1 className="text-yellow-500 text-[15px]  flex space-x-2 px-3 mt-2 rounded-lg  font-semibold text-ellipsis text-center">
-            <Star fontSize="inherit" />
-            <Star fontSize="inherit" />
-            <Star fontSize="inherit" />
-            <Star fontSize="inherit" />
-          </h1>
-          <div className="flex space-x-3  text-zin-400 font-[400] text-sm ">
-            <h1 className="flex justify-between w-full mt-1 space-x-2 text-center rounded-lg text-ellipsis">
-              <p>
-                <ThumbUp fontSize="inherit" style={{ fontWeight: "200" }} />
-              </p>
-              <p>{Category?.likes}</p>
-            </h1>
-            <h1 className="flex justify-between w-full mt-1 space-x-2 text-center rounded-lg text-ellipsis">
-              <p>
-                <ThumbDown fontSize="inherit" />
-              </p>
-              <p>{Category?.unlike}</p>
-            </h1>
-          </div>
-        </div>
       </div>{" "}
-      <div className="w-full flex justify-between space-x-1 items-center ">
-        <Button isDisabled className="w-full rounded-md p-2">
-          Lend
+      <div className="w-full justify-between space-y-1 items-center ">
+        <Button className=" bg-purple-50 w-full rounded-md p-2">
+          Lend This Book
         </Button>
-        <Button className="w-full rounded-md p-2">Reserved</Button>
+        <Button className="bg-purple-50  w-full rounded-md p-2">
+          Reserved This Book
+        </Button>
       </div>
     </div>
   );
@@ -153,7 +132,7 @@ export function Recommended({
   isAdmin?: boolean;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full p-3 border rounded-lg shadow-md bg-slate-50 boder-slate-500">
+    <div className="flex flex-col items-center justify-center w-full h-full md:p-3 border rounded-lg shadow-md bg-slate-50 boder-slate-500">
       <div className="flex justify-between w-full">
         <div className="flex space-x-2">
           <RecommendRounded color="warning" />
@@ -173,8 +152,8 @@ export function Recommended({
         </span>
       </div>{" "}
       <div className="flex items-center justify-center w-full h-full">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-4">
-          {RecomendBooks?.slice(0, 3).map((category, index) => (
+        <div className="grid grid-cols-1 md:gap-10 gap-2 md:grid-cols-3 lg:grid-cols-4">
+          {RecomendBooks?.slice(0, 5).map((category, index) => (
             <BooksRender
               key={category?.id ?? index}
               isAdmin
@@ -221,7 +200,7 @@ export function CategoryRender({
         <Tabs radius="md" aria-label="Tabs radius">
           {RecomendBooks?.categories.map((cateogry) => (
             <Tab key={cateogry} title={cateogry}>
-              <div className="grid w-full grid-cols-2 gap-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-5 xl:gap-10 ">
+              <div className="grid w-full grid-cols-1 gap-3 lg:grid-cols-2 xl:grid-cols-4 md:gap-5 xl:gap-10 ">
                 {RecomendBooks?.category[cateogry]?.map((category, index) => (
                   <BooksRender
                     isAdmin={isAdmin}
@@ -261,7 +240,7 @@ export function Reviews({ comment }: { comment: Comment[] }) {
               </h5>
             </div>
           </div>
-          <Button
+          {/* <Button
             className={
               (isFollowed
                 ? "bg-transparent text-foreground border-default-200"
@@ -273,11 +252,11 @@ export function Reviews({ comment }: { comment: Comment[] }) {
             variant={isFollowed ? "bordered" : "solid"}
             onPress={() => setIsFollowed(!isFollowed)}
           >
-            {isFollowed ? "Like" : "unlike"}
-          </Button>
+            {/* {isFollowed ? "Like" : "unlike"} */}
+          {/* </Button> */}
         </CardHeader>
 
-        <CardBody className="px-3 py-0 text-small text-default-400">
+        <CardBody className="p-4 text-small text-default-400">
           <p>
             {comment.text}
             This ony the Textook that has the proper explantion of Mathematice
@@ -291,7 +270,7 @@ export function Reviews({ comment }: { comment: Comment[] }) {
           </span>
         </CardBody>
 
-        <CardFooter className="gap-3">
+        {/* <CardFooter className="gap-3">
           <div className="flex gap-1">
             <p className="font-semibold text-default-400 text-small">4</p>
             <p className=" text-default-400 text-small">
@@ -304,7 +283,7 @@ export function Reviews({ comment }: { comment: Comment[] }) {
               <ThumbDown />
             </p>
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     );
   });

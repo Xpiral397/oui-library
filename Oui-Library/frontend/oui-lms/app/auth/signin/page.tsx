@@ -34,7 +34,8 @@ import { toast } from "react-toastify";
 import { Login } from "@/app/context/auth/login";
 import { useRouter } from "next/navigation";
 import { loadData } from "@/app/context/clientStorage/save";
-import { Loading, Unauthenticated } from "@/app/admin/due/page";
+
+// import { Loading, Unauthenticated } from "@/app/admin/due/page";/
 
 const Years = Array.from(
   { length: 5 },
@@ -60,9 +61,7 @@ export default function SiginCar() {
   const [loading, setLoading] = useState<boolean>(false);
   const [has, setHas] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
-  const [store, setStore] = useState<InitialData | Loading | Unauthenticated>(
-    "Loading"
-  );
+  const [store, setStore] = useState<InitialData | "Loading">("Loading");
   const [error, setError] = useState<any>({
     Name: "",
     Matric: "",
@@ -152,7 +151,10 @@ export default function SiginCar() {
           accessToken,
           refreshToken,
         };
-        dispatch(login(user));
+        try {
+          dispatch(login(user));
+          8;
+        } catch (e) {}
         setLevel("None");
       }
     } else {
@@ -173,9 +175,9 @@ export default function SiginCar() {
 
   return (
     <div className="flex justify-center items-center w-full h-full">
-      <div className="flex justify-between items-center space-x-[10%] mr-10 ">
+      <div className="flex justify-between items-center md:space-x-[10%] md:mr-10 ">
         {/* <Image src={Books.src} className="lg:flex hidden w-[500px]" /> */}
-        <div className="min-w-[500px] h-full rounded-lg shadow-2xl bg-zinc-50 flex flex-col px-3 py-5 ">
+        <div className="w-[350px] p-2 md:min-w-[500px] h-full rounded-lg shadow-2xl bg-zinc-50 flex flex-col md:px-3 md:py-5 ">
           <div className="flex items-center  space-x-4">
             <Image width={100} src={Logo.src} />
             <div>

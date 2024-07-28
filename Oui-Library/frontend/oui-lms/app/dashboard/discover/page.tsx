@@ -45,7 +45,7 @@ export default function Page() {
         className="w-full h-full sm:h-screen z-10"
       >
         <div className="w-full h-full">
-          <div className="w-full p-5 space-y-3 rounded-lg">
+          <div className="w-full md:p-5 space-y-3 rounded-lg">
             <section className="w-full p-1 bg-inherit">
               <Recommended
                 RecomendBooks={
@@ -63,8 +63,8 @@ export default function Page() {
             </section>
           </div>
 
-          <div className="w-full p-5 space-y-3 rounded-lg">
-            <section className="w-full p-1">
+          <div className="w-full p-2 md:p-5  space-y-3 rounded-lg">
+            <section className="w-full md:p-1">
               <CategoryRender isAdmin={false} RecomendBooks={category} />
             </section>
           </div>
@@ -81,9 +81,9 @@ export default function Page() {
             {" "}
             <div onClick={() => setshow(!show)}>
               <Cancel
-                className=" mb-10 absolute top-0 mt-2 right-1 left-0 py-1 animate-pulse text-[25px]"
+                className="mb-10 w-5 h-96 z-[100]  absolute -top-[10.2rem] ml-5  right-1 left-0 py-1 animate-pulse text-[25px]"
                 fontSize="small"
-                color="secondary"
+                color="warning"
               />
             </div>
             <Sidebar Book={selectedBooks as Books} />

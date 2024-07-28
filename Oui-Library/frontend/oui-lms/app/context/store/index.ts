@@ -39,8 +39,10 @@ const store = configureStore({
 });
 
 // Subscribe to store changes and save state to localStorage
+
 store.subscribe(() => {
-  saveState(store.getState());
+  const state = store.getState() as any;
+  saveState(state?.auth?.auth ?? state?.auth);
 });
 
 export default store;

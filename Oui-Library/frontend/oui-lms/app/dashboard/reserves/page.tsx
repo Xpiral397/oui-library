@@ -1,117 +1,117 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import api from "@/app/context/api";
 
-import { useRouter } from "next/navigation";
-import Book from "@/public/books.jpg";
-import { Category, CategoryRender, Recommended, Reserved } from "./component";
-import { ScrollShadow } from "@nextui-org/react";
-import { Books, InitialData } from "@/app/context/type";
-import { loadData } from "@/app/context/clientStorage/save";
-import { Cancel } from "@mui/icons-material";
-import { LendBooks, LendBooksRender } from "./component";
-import Sidebar from "../discover/sidebar";
-import { AnyCnameRecord } from "dns";
-export type Loading = "Loading";
-export type Unauthenticated = "unathenticated";
-export default function Page() {
-  const [show, setshow] = useState<boolean>(false);
-  const [store, setStore] = useState<InitialData | Loading | Unauthenticated>(
-    "Loading"
-  );
-  const router = useRouter();
+interface Book {
+  id: number;
+  title: string;
+  author: string;
+}
+
+interface ReservedBook {
+  id: number;
+  book: Book;
+  reserve_date: string;
+  start_date: string;
+  due_date: string;
+}
+
+const calculateFee = (dueDate: string) => {
+  const now = new Date();
+  const due = new Date(dueDate);
+  const diff = now.getTime() - due.getTime();
+  const daysOverdue = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+  if (daysOverdue <= 0) return 0;
+  if (daysOverdue === 1) return 500;
+  if (daysOverdue === 2) return 700;
+  if (daysOverdue === 3) return 1000;
+  return 1000 + (daysOverdue - 3) * 200;
+};
+
+const calculateCountdown = (dueDate: string) => {
+  const now = new Date().getTime();
+  const due = new Date(dueDate).getTime();
+  const diff = due - now;
+
+  if (diff <= 0) return "Due date passed";
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+  return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+};
+
+function ReservedBooksPage() {
+  const [reservedBooks, setReservedBooks] = useState<ReservedBook[]>([]);
+  const [show, setShow] = useState<boolean>(true);
+
   useEffect(() => {
-    const store = loadData().auth as any;
-    if (!store.auth.isAuthenticated) {
-      alert(store.auth.isAuthenticate);
-      router.push("/auth/signin");
-    } else {
-      setStore(store);
-    }
+    const fetchReservedBooks = async () => {
+      try {
+        const response = await api.get("/routes/get_reserved_books/");
+        setReservedBooks(response.data);
+      } catch (error) {
+        console.error("Error fetching reserved books:", error);
+      }
+    };
+
+    fetchReservedBooks();
   }, []);
-  const [selectedBooks, setSelectedBooks] = useState<Books>({} as Books);
-  const [categories, setCategories] = useState<any>({
-    categories: ["Fiction", "Science"], // Assuming there's only one category for simplicity
-    category: {
-      Fiction: Array.from({ length: 20 }, (_, index) => ({
-        id: `book_${index + 1}`,
-        cover: Book.src,
-        author: `Author ${index + 1}`,
-        title: `Book Title ${index + 1}`,
-        name: `Book Name ${index + 1}`,
-        rate: "5", // Example rating
-        rated: "Rated", // Example rated status
-        pages: "300", // Example number of pages
-        rating: "4.5", // Example rating
-        reviews: "100", // Example number of reviews
-        description: `Description of book ${index + 1}`, // Example description
-      })),
-      Science: Array.from({ length: 20 }, (_, index) => ({
-        id: `book_${index + 1}`,
-        cover: Book.src,
-        author: `Author ${index + 1}`,
-        title: `Book Title ${index + 1}`,
-        name: `Book Name ${index + 1}`,
-        rate: "5", // Example rating
-        rated: "Rated", // Example rated status
-        pages: "300", // Example number of pages
-        rating: "4.5", // Example rating
-        reviews: "100", // Example number of reviews
-        description: `Description of book ${index + 1}`, // Example description
-      })),
-    },
-  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setReservedBooks([...reservedBooks]); // Force re-render to update countdown timers
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [reservedBooks]);
 
   return (
-    <div className=" flex lg:flex-row flex-col bg-slate-50 w-full h-full ">
-      <ScrollShadow
-        hideScrollBar
-        orientation="vertical"
-        className="w-full h-screen"
-      >
-        <div className="w-full h-ful">
-          <div className="p-5 rounded-lg space-y-3 w-full">
-            <section className="p-1 bg-inherit w-full">
-              <Reserved
-                isAdmin={false}
-                RecomendBooks={
-                  Array.from({ length: 3 }, (_, index) => ({
-                    id: `book_${index + 1}`,
-                    cover: Book.src,
-                    author: `Author ${index + 1}`,
-                    title: `Book Title ${index + 1}`,
-                    name: `Book Name ${index + 1}`,
-                    rate: "5", // Example rating
-                    rated: "Rated", // Example rated status
-                    pages: "300", // Example number of pages
-                    rating: "4.5", // Example rating
-                    reviews: "100", // Example number of reviews
-                    description: `Description of book ${index + 1}`, // Example description
-                  })) as any
-                }
-              />
-            </section>
-          </div>
+    <div className="relative p-4 flex flex-col items-center">
+      <header className="text-center my-4">
+        <h1 className="text-2xl font-bold">Library Reserved Books</h1>
+        <p className="text-sm text-gray-600">
+          Check the list of reserved books and their due dates.
+        </p>
+      </header>
+      <div className="w-full flex justify-center">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6">
+          {reservedBooks.map((reservedBook) => {
+            const fee = calculateFee(reservedBook.due_date);
+            const countdown = calculateCountdown(reservedBook.due_date);
+            return (
+              <div
+                key={reservedBook.id}
+                className="bg-white shadow-slate-200 shadow-2xl rounded-lg p-6 transition-transform transform hover:scale-105 w-[300px] h-auto"
+              >
+                <h3 className="text-xl font-semibold">
+                  {reservedBook.book.title}
+                </h3>
+                <p className="text-md text-gray-700">
+                  Author: {reservedBook.book.author}
+                </p>
+                <p className="text-md">Reserved: {reservedBook.reserve_date}</p>
+                <p className="text-md">Due: {reservedBook.due_date}</p>
+                {fee > 0 ? (
+                  <p className="text-md text-red-600">
+                    Fee: NGN {Number(fee).toLocaleString()}
+                  </p>
+                ) : (
+                  <p className="text-md text-green-600">
+                    Countdown: {countdown}
+                  </p>
+                )}
+              </div>
+            );
+          })}
         </div>
-      </ScrollShadow>
-      {selectedBooks && show && (
-        <div className="absolute right-0 top- bg-gradient-to-r  from-amber-50 via-yellow-50 to-slate-50 shadow-2xl flex py-5 px-5 justify-center w-[400px] h-full z-[100] ">
-          <ScrollShadow
-            hideScrollBar
-            orientation="vertical"
-            className="w-full h-full sm:h-screen z-10"
-          >
-            {" "}
-            <div onClick={() => setshow(!show)}>
-              <Cancel
-                className=" mb-10 absolute top-0 mt-2 right-1 left-0 py-1 animate-pulse text-[25px]"
-                fontSize="small"
-                color="secondary"
-              />
-            </div>
-            <Sidebar Book={selectedBooks as Books} />
-          </ScrollShadow>{" "}
-        </div>
-      )}
+      </div>
     </div>
   );
 }
+
+export default ReservedBooksPage;
