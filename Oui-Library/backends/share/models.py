@@ -199,7 +199,7 @@ class UserAccount(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     locked_amount = models.IntegerField(default=0)
     balance = models.OneToOneField(Balance, on_delete=models.CASCADE)
-    preferance = models.OneToOneField(UserPreferance, on_delete=models.CASCADE)
+    # preferance = models.OneToOneField(UserPreferance, on_delete=models.CASCADE)
     reservedBook = models.IntegerField(default=0)
     lentReserved = models.IntegerField(default=0)
     objects = CustomUserManager()
